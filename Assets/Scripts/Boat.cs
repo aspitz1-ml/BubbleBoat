@@ -77,6 +77,8 @@ public class Boat : MonoBehaviour
             velocity.y = jumpForce; // Apply upward force
             // Give boost to forward speed
             forwardSpeed += forwardSpeedBoost;
+            // remove a bit of extra fuel when jumping
+            Fuel.Instance.AddFuel(-5f);
 
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
