@@ -22,10 +22,18 @@ public class BubbleWand : MonoBehaviour
     void OnTriggerExit(Collider collider)
     {
         Debug.Log("Collided with: " + collider.gameObject.name);
-        if(collider.gameObject.CompareTag("Boat"))
+        if(collider.gameObject.CompareTag("Boat") && Fuel.Instance != null)
         {
-            Debug.Log("Adding fuel to boat");
+            Debug.Log("Bubble Wand! Adding fuel to boat");
             Fuel.Instance.AddFuel(10);
+        } 
+
+        if (Fuel.Instance == null)
+        {
+            Debug.Log("Fuel instance not found");
         }
+
+
+       
     }
 }
