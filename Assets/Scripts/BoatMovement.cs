@@ -8,7 +8,7 @@ public class BoatMovement : MonoBehaviour
     public float jumpForce = 5f; // Upward force when pressing the space bar
     public float maxFallSpeed = -20f; // Maximum falling forward Speed
     public float maxHeight = 20F;
-    public float forwardSpeed = 0f; // How fast the boat moves forward
+    public float forwardSpeed = 10f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
     
@@ -27,6 +27,7 @@ public class BoatMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         // Add fuel to the boat
         AddFuel(maxFuel);
+        characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
     }
 
     void Update()
@@ -45,16 +46,10 @@ public class BoatMovement : MonoBehaviour
         }
         #endregion
 
+        // Debug.Log("Forward Speed: " + forwardSpeed);
         #region Vertical Movement
         // Apply gravity to velocity
-        if (characterController.isGrounded && velocity.y < 0)
-        {
-            velocity.y = 0; // Reset velocity if grounded
-        }
-        else
-        {
-            velocity.y += gravity * Time.deltaTime; // Apply gravity
-        }
+        velocity.y += gravity * Time.deltaTime; // Apply gravity
 
         // Limit the fall to maxFallSpeed
         velocity.y = Mathf.Max(velocity.y, maxFallSpeed);
@@ -62,7 +57,7 @@ public class BoatMovement : MonoBehaviour
         // Check for the space bar input to "float" the boat
         if (Input.GetKeyDown(KeyCode.Space) && !coolDown && transform.position.y < maxHeight)
         {
-        Debug.Log("Up!!");
+            Debug.Log("Up!!");
             coolDown = true; // Set the cooldown flag
             velocity.y = jumpForce; // Apply upward force
             // Give boost to forward speed
@@ -111,7 +106,7 @@ public class BoatMovement : MonoBehaviour
 
     private IEnumerator ForwardSpeedRefresh() {
         yield return new WaitForSeconds(0.15f);
-        forwardSpeed = 0f;
+        forwardSpeed = 10f;
     }
 
     private IEnumerator CooldownRefresh() {
