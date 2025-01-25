@@ -78,6 +78,12 @@ public class Boat : MonoBehaviour
             // Give boost to forward speed
             forwardSpeed += forwardSpeedBoost;
 
+            // Remove a bit of fuel when we jump
+            if (Fuel.Instance != null)
+            {
+                Fuel.Instance.AddFuel(-5);
+            }
+
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
         }
@@ -112,12 +118,14 @@ public class Boat : MonoBehaviour
         #endregion
     }
 
-    private IEnumerator ForwardSpeedRefresh() {
+    private IEnumerator ForwardSpeedRefresh() 
+    {
         yield return new WaitForSeconds(0.15f);
         forwardSpeed = 10f;
     }
 
-    private IEnumerator CooldownRefresh() {
+    private IEnumerator CooldownRefresh() 
+    {
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
     } 
