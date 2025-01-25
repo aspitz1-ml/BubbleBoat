@@ -96,17 +96,16 @@ public class Boat : MonoBehaviour
 
         #region Horizontal Movement
         // Move the boat with the arrow keys
-        // TODO: This if / else way of checking for movement can be buggy this should be some kind of state machine
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Debug.Log("Right Arrow");
-            horizontalSpeed = 1f;
+            horizontalSpeed = 10f;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
         } else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
             Debug.Log("Left Arrow");
-            horizontalSpeed = 1f;
-            characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
+            horizontalSpeed = 10f;
+            characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
         } else
         {
             horizontalSpeed = 0f;
