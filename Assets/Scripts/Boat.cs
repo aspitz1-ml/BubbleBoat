@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoatMovement : MonoBehaviour
+public class Boat : MonoBehaviour
 {
     public float gravity = -9.8f; // Gravity force (negative for falling down)
     public float jumpForce = 5f; // Upward force when pressing the space bar
@@ -11,11 +11,6 @@ public class BoatMovement : MonoBehaviour
     public float forwardSpeed = 10f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
-    
-    public float maxFuel = 100f; // Maximum fuel level
-    public float currentFuel = 0f; // Current fuel level
-    public float fuelConsumptionRate = 10f; // How fast fuel is consumed
-
 
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
@@ -25,25 +20,45 @@ public class BoatMovement : MonoBehaviour
     {
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
-        // Add fuel to the boat
-        AddFuel(maxFuel);
         characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
+
+        // Add initial fuel to the boat if Fuel singleton exists
+        if (Fuel.Instance != null)
+        {
+            Fuel.Instance.AddFuel(Fuel.Instance.maxFuel);
+            Debug.Log("Fuel added to boat");
+        } else {
+            Debug.Log("Fuel instance not found");
+        }
     }
 
     void Update()
     {
-        #region Fuel Management
-        if (currentFuel > 0)
+        #region Fuel Check
+        // Stop movement if out of fuel
+        if (Fuel.Instance != null && Fuel.Instance.currentFuel <= 0)
         {
-            // Decrease fuel over time
-            currentFuel -= fuelConsumptionRate * Time.deltaTime;
-            currentFuel = Mathf.Max(currentFuel, 0); // Clamp fuel to 0
+            Debug.Log("Out of fuel! Boat cannot move.");
+            forwardSpeed = 0; // Stop forward movement
+            return; // Skip further processing
         }
-        else
+        #endregion
+
+        #region Fuel Consumption
+        // Consume fuel over time
+        if (Fuel.Instance != null)
         {
-            Debug.Log("Out of fuel!");
-            forwardSpeed = 0; // No forward movement without fuel
+            Fuel.Instance.currentFuel -= Fuel.Instance.fuelConsumptionRate * Time.deltaTime;
+            Fuel.Instance.currentFuel = Mathf.Max(Fuel.Instance.currentFuel, 0); // Clamp to 0
         }
+
+        if (Fuel.Instance != null && Fuel.Instance.currentFuel <= 0)
+        {
+            Debug.Log("Out of fuel! Boat cannot move.");
+            forwardSpeed = 0; // Stop forward movement
+            return; // Skip further processing
+        }
+        
         #endregion
 
         // Debug.Log("Forward Speed: " + forwardSpeed);
@@ -95,13 +110,6 @@ public class BoatMovement : MonoBehaviour
             horizontalSpeed = 0f;
         }
         #endregion
-    }
-
-    // Add fuel to the boat
-    public void AddFuel(float amount)
-    {
-        currentFuel += amount;
-        currentFuel = Mathf.Clamp(currentFuel, 0, maxFuel); // Clamp fuel to maxFuel
     }
 
     private IEnumerator ForwardSpeedRefresh() {
