@@ -11,6 +11,11 @@ public class BoatMovement : MonoBehaviour
     public float forwardSpeed = 0f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
+    
+    public float maxFuel = 100f; // Maximum fuel level
+    public float currentFuel = 0f; // Current fuel level
+    public float fuelConsumptionRate = 10f; // How fast fuel is consumed
+
 
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
@@ -20,10 +25,26 @@ public class BoatMovement : MonoBehaviour
     {
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
+        // Add fuel to the boat
+        AddFuel(maxFuel);
     }
 
     void Update()
     {
+        #region Fuel Management
+        if (currentFuel > 0)
+        {
+            // Decrease fuel over time
+            currentFuel -= fuelConsumptionRate * Time.deltaTime;
+            currentFuel = Mathf.Max(currentFuel, 0); // Clamp fuel to 0
+        }
+        else
+        {
+            Debug.Log("Out of fuel!");
+            forwardSpeed = 0; // No forward movement without fuel
+        }
+        #endregion
+
         #region Vertical Movement
         // Apply gravity to velocity
         if (characterController.isGrounded && velocity.y < 0)
@@ -79,6 +100,13 @@ public class BoatMovement : MonoBehaviour
             horizontalSpeed = 0f;
         }
         #endregion
+    }
+
+    // Add fuel to the boat
+    public void AddFuel(float amount)
+    {
+        currentFuel += amount;
+        currentFuel = Mathf.Clamp(currentFuel, 0, maxFuel); // Clamp fuel to maxFuel
     }
 
     private IEnumerator ForwardSpeedRefresh() {
