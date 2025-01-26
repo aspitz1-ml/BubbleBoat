@@ -92,7 +92,7 @@ MonoBehaviour:
   gravity: -9.8
   jumpForce: 5
   maxFallSpeed: -20
-  maxHeight: 20
+  maxHeight: 50
   forwardSpeed: 10
   forwardSpeedBoost: 1
   horizontalSpeed: 0
