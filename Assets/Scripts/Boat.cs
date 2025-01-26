@@ -13,6 +13,12 @@ public class Boat : MonoBehaviour
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
     public DamageFlash damageFlash; // Reference to the DamageFlash script
 
+    public GameObject DefaultLookAt; // Neutral look at point
+    public GameObject LookLeftPoint; // Look at point when moving left
+    public GameObject LookRightPoint; // Look at point when moving right
+    public GameObject LookUpPoint; // Look at point when moving up
+    public GameObject LookAt; // Current look at point
+
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
     private bool coolDown = false; // Only allow one jump every 0.3 seconds
@@ -23,6 +29,8 @@ public class Boat : MonoBehaviour
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
         characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
+        // Look neutral by default
+        LookAt = DefaultLookAt;
         damageFlash = GetComponent<DamageFlash>();
 
         // Add initial fuel to the boat if Fuel singleton exists
@@ -83,6 +91,8 @@ public class Boat : MonoBehaviour
             // remove a bit of extra fuel when jumping
             Fuel.Instance.AddFuel(-5f);
 
+            // Look Up!
+            LookAt = LookUpPoint;
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
         }
@@ -99,20 +109,32 @@ public class Boat : MonoBehaviour
 
         #region Horizontal Movement
         // Move the boat with the arrow keys
-        // TODO: This if / else way of checking for movement can be buggy this should be some kind of state machine
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Debug.Log("Right Arrow");
-            horizontalSpeed = 1f;
+            horizontalSpeed = 10f;
+            // Look Right!
+            LookAt = LookRightPoint;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
         } else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
             Debug.Log("Left Arrow");
-            horizontalSpeed = 1f;
-            characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
+            horizontalSpeed = 10f;
+            // Look Left!
+            LookAt = LookLeftPoint;
+            characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
         } else
         {
             horizontalSpeed = 0f;
+        }
+        #endregion
+
+        #region Smooth Rotation
+        if (LookAt != null)
+        {
+            Debug.Log("Looking at: " + LookAt);
+            Quaternion LookAtRotation = Quaternion.LookRotation(LookAt.transform.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, LookAtRotation, Time.deltaTime * 2f);
         }
         #endregion
     }
