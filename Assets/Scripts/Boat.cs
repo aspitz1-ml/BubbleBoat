@@ -93,7 +93,7 @@ public class Boat : MonoBehaviour
             Fuel.Instance.AddFuel(-5f);
 
             // Look Up!
-            // LookAt = LookUpPoint;
+            LookAt = LookUpPoint;
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
         }
@@ -115,19 +115,19 @@ public class Boat : MonoBehaviour
             Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
             // Look Right!
-            // LookAt = LookRightPoint;
+            LookAt = LookRightPoint;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
         } else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
             Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
             // Look Left!
-            // LookAt = LookLeftPoint;
+            LookAt = LookLeftPoint;
             characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
         } else
         {
             horizontalSpeed = 0f;
-            // LookAt = DefaultLookAt;
+            LookAt = DefaultLookAt;
         }
         #endregion
 
@@ -151,7 +151,7 @@ public class Boat : MonoBehaviour
     private IEnumerator CooldownRefresh() {
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
-        // LookAt = DefaultLookAt;
+        LookAt = DefaultLookAt;
     } 
 
     void OnTriggerEnter(Collider other)
