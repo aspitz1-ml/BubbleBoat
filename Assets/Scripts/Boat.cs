@@ -37,7 +37,7 @@ public class Boat : MonoBehaviour
         GameObject gameOverObj = GameObject.Find("GameOverText");
         if (gameOverObj != null)
         {
-            Debug.Log("Game Over object found");
+            Debug.Log("Hit OBJECT");
             gameOver = gameOverObj.GetComponent<GameOver>();
         }
         
