@@ -132,8 +132,8 @@ public class Boat : MonoBehaviour
         #endregion
 
         #region Horizontal Movement
-        // Move the boat with the arrow keys
-        if (Input.GetKey(KeyCode.RightArrow))
+        // Move the boat with the arrow keys or A/D keys
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             // Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
@@ -141,7 +141,7 @@ public class Boat : MonoBehaviour
             targetYRotation = maxRotationAngle; // Turn to the left
             targetXRotation = -maxTiltAngle; // Tilt to the left
         }
-        else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
+        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             // Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
