@@ -11,16 +11,19 @@ public class Boat : MonoBehaviour
     public float forwardSpeed = 10f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
+    public DamageFlash damageFlash; // Reference to the DamageFlash script
 
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
     private bool coolDown = false; // Only allow one jump every 0.3 seconds
+    
 
     void Start()
     {
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
         characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
+        damageFlash = GetComponent<DamageFlash>();
 
         // Add initial fuel to the boat if Fuel singleton exists
         if (Fuel.Instance != null)
@@ -123,4 +126,13 @@ public class Boat : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
     } 
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Boat hit something!");
+        if (other.gameObject.CompareTag("Hazard"))
+        {
+            damageFlash.StartCoroutine(damageFlash.FlashDamage());
+        }
+    }
 }
