@@ -16,9 +16,9 @@ public class Boat : MonoBehaviour
     public float maxRotationAngle = 30f; // Maximum angle to tilt when turning
     public float maxTiltAngle = 10f; // Maximum angle to tilt left/right
     public float maxVerticalTiltAngle = 15f; // Maximum angle to tilt upward/downward
-    public DamageFlash damageFlash; // Reference to the DamageFlash script
     public GameOver gameOver; // Reference to the GameOver script
     public YouWin youWin; // Reference to the YouWin script
+    public Ouch ouch; // Reference to the Ouch script
     
 
     private bool isGameOver = false;
@@ -37,18 +37,17 @@ public class Boat : MonoBehaviour
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
         characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime);
-        damageFlash = GetComponent<DamageFlash>();
-        GameObject gameOverObj = GameObject.Find("GameOverText");
-        if (gameOverObj != null)
-        {
-            gameOver = gameOverObj.GetComponent<GameOver>();
-        }
+        // GameObject gameOverObj = GameObject.Find("GameOverText");
+        // if (gameOverObj != null)
+        // {
+        //     gameOver = gameOverObj.GetComponent<GameOver>();
+        // }
 
-        GameObject youWinObj = GameObject.Find("YouWinText");
-        if (youWinObj != null)
-        {
-            youWin = youWinObj.GetComponent<YouWin>();
-        }
+        // GameObject youWinObj = GameObject.Find("YouWinText");
+        // if (youWinObj != null)
+        // {
+        //     youWin = youWinObj.GetComponent<YouWin>();
+        // }
 
         InitFuel();
     }
@@ -197,7 +196,8 @@ public class Boat : MonoBehaviour
         Debug.Log("Boat hit something!");
         if (other.gameObject.CompareTag("Hazard"))
         {
-            damageFlash.StartCoroutine(damageFlash.FlashDamage());
+            ouch.gameObject.SetActive(true);
+            StartCoroutine(ShowOuch());
         }
 
         if (other.gameObject.CompareTag("BubbleWandHandle"))
@@ -214,6 +214,18 @@ public class Boat : MonoBehaviour
             isGameOver = true;
             StopBoat();
         }
+    }
+
+    private IEnumerator ShowOuch()
+    {
+        ouch.SetVisible(true);
+        yield return new WaitForSeconds(.5f);
+        ouch.SetVisible(false);
+        yield return new WaitForSeconds(.5f);
+        ouch.SetVisible(true);
+        yield return new WaitForSeconds(.5f);
+        ouch.SetVisible(false);
+        yield return new WaitForSeconds(.5f);
     }
 
     private IEnumerator CorrectBounceBack()

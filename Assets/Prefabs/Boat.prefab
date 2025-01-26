@@ -4906,9 +4906,6 @@ PrefabInstance:
       addedObject: {fileID: 1700009253230460246}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3667977570776206506}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7553236957293048211}
   m_SourcePrefab: {fileID: 100100000, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
 --- !u!4 &479318969921568606 stripped
@@ -4935,6 +4932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: -9.8
   jumpForce: 5
+  backForce: -0.5
   maxFallSpeed: -20
   maxHeight: 50
   forwardSpeed: 10
@@ -4946,6 +4944,8 @@ MonoBehaviour:
   maxVerticalTiltAngle: 15
   damageFlash: {fileID: 0}
   gameOver: {fileID: 0}
+  youWin: {fileID: 0}
+  ouch: {fileID: 0}
 --- !u!143 &3193471407922298593
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5013,19 +5013,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7327674, y: 0.5851991, z: 2.22857}
   m_Center: {x: -0.07984117, y: 0.4889604, z: 0.6142843}
---- !u!114 &3667977570776206506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003514078548174308}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ad01a800bcb54ed5a5a9146a9ae42e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashDuration: 0.15
 --- !u!95 &7553236957293048211
 Animator:
   serializedVersion: 7
