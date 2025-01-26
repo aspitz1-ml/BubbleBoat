@@ -70,6 +70,7 @@ public class Boat : MonoBehaviour
         {
             Debug.Log("Out of fuel! Boat cannot move.");
             forwardSpeed = 0; // Stop forward movement
+            
             return; // Skip further processing
         }
 

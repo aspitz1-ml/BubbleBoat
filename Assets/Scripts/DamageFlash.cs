@@ -20,9 +20,11 @@ public class DamageFlash : MonoBehaviour
         // flash 3x
         for (int i = 0; i < 3; i++)
         {
+            Debug.Log("Flashing"  + i);
             meshRenderer.material.color = Color.red;
             yield return new WaitForSeconds(flashDuration);
             meshRenderer.material.color = originalColor;
+            yield return new WaitForSeconds(flashDuration);
         }
 
     }
