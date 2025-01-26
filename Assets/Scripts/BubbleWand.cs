@@ -3,7 +3,7 @@ using UnityEngine;
 public class BubbleWand : MonoBehaviour
 {
 
-    public float fuelAmount = 30;
+    public float fuelAmount = 20;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
