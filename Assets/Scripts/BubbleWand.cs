@@ -20,7 +20,7 @@ public class BubbleWand : MonoBehaviour
     }
     
 
-    void OnTriggerExit(Collider collider)
+    void OnTriggerEnter(Collider collider)
     {
         Debug.Log("Collided with: " + collider.gameObject.name);
         if(collider.gameObject.CompareTag("Boat") && Fuel.Instance != null)
