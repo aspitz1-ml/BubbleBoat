@@ -11,27 +11,27 @@ public class Boat : MonoBehaviour
     public float forwardSpeed = 10f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
+    public float rotationSpeed = 5f; // How fast the boat rotates when turning
+    public float maxRotationAngle = 30f; // Maximum angle to tilt when turning
+    public float maxTiltAngle = 10f; // Maximum angle to tilt left/right
+    public float maxVerticalTiltAngle = 15f; // Maximum angle to tilt upward/downward
     public DamageFlash damageFlash; // Reference to the DamageFlash script
-
-    public GameObject DefaultLookAt; // Neutral look at point
-    public GameObject LookLeftPoint; // Look at point when moving left
-    public GameObject LookRightPoint; // Look at point when moving right
-    public GameObject LookUpPoint; // Look at point when moving up
-    public GameObject LookAt; // Current look at point
 
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
     private bool coolDown = false; // Only allow one jump every 0.3 seconds
-    private float rotationOffset = 90f; // Offset to rotate the boat
-    
+    private float targetYRotation = 0f; // Target rotation angle on the Y-axis
+    private float currentYRotation = 0f; // Current rotation angle for smooth interpolation
+    private float targetXRotation = 0f; // Target rotation angle on the X-axis
+    private float currentXRotation = 0f; // Current rotation angle for smooth interpolation
+    private float targetZRotation = 0f; // Target rotation angle on the Z-axis (upward/downward tilt)
+    private float currentZRotation = 0f; // Current Z-axis rotation for smooth interpolation
 
     void Start()
     {
         // Get the CharacterController component
         characterController = GetComponent<CharacterController>();
-        characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
-        // Look neutral by default
-        LookAt = DefaultLookAt;
+        characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime);
         damageFlash = GetComponent<DamageFlash>();
 
         // Add initial fuel to the boat if Fuel singleton exists
@@ -39,7 +39,9 @@ public class Boat : MonoBehaviour
         {
             Fuel.Instance.AddFuel(Fuel.Instance.maxFuel);
             Debug.Log("Fuel added to boat");
-        } else {
+        }
+        else
+        {
             Debug.Log("Fuel instance not found");
         }
     }
@@ -70,10 +72,9 @@ public class Boat : MonoBehaviour
             forwardSpeed = 0; // Stop forward movement
             return; // Skip further processing
         }
-        
+
         #endregion
 
-        // Debug.Log("Forward Speed: " + forwardSpeed);
         #region Vertical Movement
         // Apply gravity to velocity
         velocity.y += gravity * Time.deltaTime; // Apply gravity
@@ -92,20 +93,31 @@ public class Boat : MonoBehaviour
             // remove a bit of extra fuel when jumping
             Fuel.Instance.AddFuel(-5f);
 
-            // Look Up!
-            LookAt = LookUpPoint;
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
         }
 
         // Move the CharacterController based on velocity
         characterController.Move(velocity * Time.deltaTime);
+
+        // Tilt upward when moving up, and downward when falling
+        if (velocity.y > 0)
+        {
+            targetZRotation = -maxVerticalTiltAngle; // Tilt upward
+        }
+        else if (velocity.y < 0)
+        {
+            targetZRotation = maxVerticalTiltAngle; // Tilt downward
+        }
+        else
+        {
+            targetZRotation = 0f; // Neutral when not moving up or down
+        }
         #endregion
 
         #region Forward Movement
         // Constant forward movement
-        // TODO: This moves forward even when the boat is grounded - The boat grounded is game over but it probably should not move on the ground
-        characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime );
+        characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime);
         #endregion
 
         #region Horizontal Movement
@@ -114,45 +126,48 @@ public class Boat : MonoBehaviour
         {
             Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
-            // Look Right!
-            LookAt = LookRightPoint;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
-        } else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
+            targetYRotation = maxRotationAngle; // Turn to the left
+            targetXRotation = -maxTiltAngle; // Tilt to the left
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
             Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
-            // Look Left!
-            LookAt = LookLeftPoint;
             characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
-        } else
+            targetYRotation = -maxRotationAngle; // Turn to the right
+            targetXRotation = maxTiltAngle; // Tilt to the right
+        }
+        else
         {
             horizontalSpeed = 0f;
-            LookAt = DefaultLookAt;
+            targetYRotation = 0f; // Straighten the boat when not turning
+            targetXRotation = 0f; // Straighten the boat when not turning
         }
         #endregion
 
         #region Smooth Rotation
-        if (LookAt != null)
-        {
-            Debug.Log("LookAt.transform.position: " + LookAt.transform.position);
-            Debug.Log("transform.position: " + transform.position);
-            Quaternion LookAtRotation = Quaternion.LookRotation(LookAt.transform.position - transform.position + new Vector3(0, 0, rotationOffset));
-            Debug.Log("LookAtRotation: " + LookAtRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, LookAtRotation, Time.deltaTime * 5.0f);
-        }
+        // Smoothly interpolate the current rotation towards the target rotation
+        currentYRotation = Mathf.Lerp(currentYRotation, targetYRotation, Time.deltaTime * rotationSpeed);
+        currentXRotation = Mathf.Lerp(currentXRotation, targetXRotation, Time.deltaTime * rotationSpeed);
+        currentZRotation = Mathf.Lerp(currentZRotation, targetZRotation, Time.deltaTime * rotationSpeed);
+
+        // Apply the calculated rotation to the boat
+        transform.rotation = Quaternion.Euler(currentZRotation, currentYRotation, currentXRotation);
         #endregion
     }
 
-    private IEnumerator ForwardSpeedRefresh() {
+    private IEnumerator ForwardSpeedRefresh()
+    {
         yield return new WaitForSeconds(0.15f);
         forwardSpeed = 10f;
     }
 
-    private IEnumerator CooldownRefresh() {
+    private IEnumerator CooldownRefresh()
+    {
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
-        LookAt = DefaultLookAt;
-    } 
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -163,3 +178,4 @@ public class Boat : MonoBehaviour
         }
     }
 }
+
