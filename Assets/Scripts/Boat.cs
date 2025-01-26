@@ -125,10 +125,11 @@ public class Boat : MonoBehaviour
             horizontalSpeed = 0f;
         }
         #endregion
-        
+
         #region Smooth Rotation
         if (LookAt != null)
         {
+            Debug.Log("Looking at: " + LookAt);
             Quaternion LookAtRotation = Quaternion.LookRotation(LookAt.transform.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, LookAtRotation, Time.deltaTime * 2f);
         }
