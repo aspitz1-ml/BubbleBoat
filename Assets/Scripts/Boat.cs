@@ -6,6 +6,7 @@ public class Boat : MonoBehaviour
 {
     public float gravity = -9.8f; // Gravity force (negative for falling down)
     public float jumpForce = 5f; // Upward force when pressing the space bar
+    public float backForce = -0.5f; // Backward force when hitting a obstacle
     public float maxFallSpeed = -20f; // Maximum falling forward Speed
     public float maxHeight = 50F; // Maximum height the boat can reach
     public float forwardSpeed = 10f; // How fast the boat moves forward
@@ -182,6 +183,20 @@ public class Boat : MonoBehaviour
         {
             damageFlash.StartCoroutine(damageFlash.FlashDamage());
         }
+
+        if (other.gameObject.CompareTag("BubbleWandHandle"))
+        {
+            Debug.Log("Boat collided with BubbleWandHandle");
+            // Have Boat bounce back when hitting the BubbleWandHandle
+            velocity.x = backForce;
+            StartCoroutine(CorrectBounceBack());
+        }
+    }
+
+    private IEnumerator CorrectBounceBack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        velocity.x = 0;
     }
 }
 
