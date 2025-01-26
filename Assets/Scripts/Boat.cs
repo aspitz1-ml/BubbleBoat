@@ -7,7 +7,7 @@ public class Boat : MonoBehaviour
     public float gravity = -9.8f; // Gravity force (negative for falling down)
     public float jumpForce = 5f; // Upward force when pressing the space bar
     public float maxFallSpeed = -20f; // Maximum falling forward Speed
-    public float maxHeight = 20F;
+    public float maxHeight = 50F; // Maximum height the boat can reach
     public float forwardSpeed = 10f; // How fast the boat moves forward
     public float forwardSpeedBoost = 1f; // Adds boost on vertical movement key input
     public float horizontalSpeed = 0f; // How fast the boat moves left or right
