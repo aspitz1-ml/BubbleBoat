@@ -3,6 +3,7 @@ using UnityEngine;
 public class BubbleWand : MonoBehaviour
 {
 
+    public float fuelAmount = 30;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,15 +26,12 @@ public class BubbleWand : MonoBehaviour
         if(collider.gameObject.CompareTag("Boat") && Fuel.Instance != null)
         {
             Debug.Log("Bubble Wand! Adding fuel to boat");
-            Fuel.Instance.AddFuel(10);
+            Fuel.Instance.AddFuel(fuelAmount);
         } 
 
         if (Fuel.Instance == null)
         {
             Debug.Log("Fuel instance not found");
         }
-
-
-       
     }
 }
