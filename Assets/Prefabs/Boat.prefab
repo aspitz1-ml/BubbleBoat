@@ -93,6 +93,12 @@ MonoBehaviour:
   forwardSpeed: 10
   forwardSpeedBoost: 1
   horizontalSpeed: 0
+  damageFlash: {fileID: 0}
+  DefaultLookAt: {fileID: 0}
+  LookLeftPoint: {fileID: 0}
+  LookRightPoint: {fileID: 0}
+  LookUpPoint: {fileID: 0}
+  LookAt: {fileID: 0}
 --- !u!65 &6423436889552319127
 BoxCollider:
   m_ObjectHideFlags: 0
