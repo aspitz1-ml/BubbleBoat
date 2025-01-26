@@ -8,6 +8,7 @@ TagManager:
   - Boat
   - Hazard
   - BubbleWandHandel
+  - FinishLine
   layers:
   - Default
   - TransparentFX

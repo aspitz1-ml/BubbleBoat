@@ -18,7 +18,10 @@ public class Boat : MonoBehaviour
     public float maxVerticalTiltAngle = 15f; // Maximum angle to tilt upward/downward
     public DamageFlash damageFlash; // Reference to the DamageFlash script
     public GameOver gameOver; // Reference to the GameOver script
+    public YouWin youWin; // Reference to the YouWin script
+    
 
+    private bool isGameOver = false;
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
     private bool coolDown = false; // Only allow one jump every 0.3 seconds
@@ -41,6 +44,12 @@ public class Boat : MonoBehaviour
             gameOver = gameOverObj.GetComponent<GameOver>();
         }
 
+        GameObject youWinObj = GameObject.Find("YouWinText");
+        if (youWinObj != null)
+        {
+            youWin = youWinObj.GetComponent<YouWin>();
+        }
+
         InitFuel();
     }
 
@@ -50,8 +59,9 @@ public class Boat : MonoBehaviour
         // Stop movement if out of fuel
         if (Fuel.Instance != null && Fuel.Instance.currentFuel <= 0)
         {
-            forwardSpeed = 0; // Stop forward movement
+            StopBoat();
             gameOver.OnGameOver();
+            isGameOver = true;
 
             return; // Skip further processing
         }
@@ -59,7 +69,7 @@ public class Boat : MonoBehaviour
 
         #region Fuel Consumption
         // Consume fuel over time
-        if (Fuel.Instance != null)
+        if (Fuel.Instance != null && !isGameOver)
         {
             Fuel.Instance.currentFuel -= Fuel.Instance.fuelConsumptionRate * Time.deltaTime;
             Fuel.Instance.currentFuel = Mathf.Max(Fuel.Instance.currentFuel, 0); // Clamp to 0
@@ -76,7 +86,7 @@ public class Boat : MonoBehaviour
         velocity.y = Mathf.Max(velocity.y, maxFallSpeed);
 
         // Check for the space bar input to "float" the boat
-        if (Input.GetKeyDown(KeyCode.Space) && !coolDown && transform.position.y < maxHeight)
+        if ((Input.GetKeyDown(KeyCode.Space) && !coolDown && transform.position.y < maxHeight) && !isGameOver)
         {
             // Debug.Log("Up!!");
             coolDown = true; // Set the cooldown flag
@@ -115,7 +125,7 @@ public class Boat : MonoBehaviour
 
         #region Horizontal Movement
         // Move the boat with the arrow keys or A/D keys
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isGameOver)
         {
             // Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
@@ -123,7 +133,7 @@ public class Boat : MonoBehaviour
             targetYRotation = maxRotationAngle; // Turn to the left
             targetXRotation = -maxTiltAngle; // Tilt to the left
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isGameOver)
         {
             // Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
@@ -176,6 +186,12 @@ public class Boat : MonoBehaviour
         }
     }
 
+    void StopBoat()
+    {
+        forwardSpeed = 0;
+        horizontalSpeed = 0;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Boat hit something!");
@@ -191,12 +207,20 @@ public class Boat : MonoBehaviour
             velocity.x = backForce;
             StartCoroutine(CorrectBounceBack());
         }
+
+        if (other.gameObject.CompareTag("FinishLine"))
+        {
+            youWin.OnYouWin();
+            isGameOver = true;
+            StopBoat();
+        }
     }
 
     private IEnumerator CorrectBounceBack()
     {
         yield return new WaitForSeconds(0.5f);
         velocity.x = 0;
+
     }
 }
 
