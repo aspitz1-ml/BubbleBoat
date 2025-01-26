@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5441555593556952359}
   - component: {fileID: 5115961454562464985}
   m_Layer: 0
-  m_Name: StaticHazard
+  m_Name: StaticHazard 3
   m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.8740822, y: 10.795594, z: 11.218164}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.220622, y: 4.220622, z: 4.220622}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
