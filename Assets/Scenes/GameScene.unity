@@ -566,9 +566,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1003514078548174308, guid: a54b4d90cf4ba40bea908b84be38d4e6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1954997767}
-    - targetCorrespondingSourceObject: {fileID: 1003514078548174308, guid: a54b4d90cf4ba40bea908b84be38d4e6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1954997773}
   m_SourcePrefab: {fileID: 100100000, guid: a54b4d90cf4ba40bea908b84be38d4e6, type: 3}
 --- !u!1001 &822187675
@@ -941,19 +938,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 479318969921568606, guid: a54b4d90cf4ba40bea908b84be38d4e6, type: 3}
   m_PrefabInstance: {fileID: 615344501}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1954997767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954997759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ad01a800bcb54ed5a5a9146a9ae42e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashDuration: 0.15
 --- !u!23 &1954997773
 MeshRenderer:
   m_ObjectHideFlags: 0
