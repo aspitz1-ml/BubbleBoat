@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7818893401758485284}
   - component: {fileID: 3668105909644599336}
-  - component: {fileID: 3792955564835962592}
   m_Layer: 0
   m_Name: BubbleWand
-  m_TagString: Untagged
+  m_TagString: BubbleWand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,21 +54,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.50000024
-  m_Height: 1.9999999
+  m_Height: 1.6312752
   m_Direction: 1
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940699}
---- !u!114 &3792955564835962592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716012533631097066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 380191191cf234d31912f97202c790eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Center: {x: 0.000000047607852, y: -0.18436222, z: -0.000000095215704}
 --- !u!1 &2291763386055199369
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,10 +67,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5020666887758158137}
   - component: {fileID: 2641010068458413961}
-  - component: {fileID: 1054183292364626063}
+  - component: {fileID: 2922621657167601948}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: BubbleWand
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +84,7 @@ Transform:
   m_GameObject: {fileID: 2291763386055199369}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.47, z: 0}
+  m_LocalPosition: {x: -0, y: 1.85, z: 0.02}
   m_LocalScale: {x: 0, y: 0.97747934, z: 2.5603201}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -122,9 +109,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.870449
-  m_Center: {x: 0, y: 0.4, z: 0}
---- !u!114 &1054183292364626063
+  m_Radius: 0.96067107
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2922621657167601948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df47551b1e6f436bab3bd150f8cde8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelAmount: 20
+  fuelAmount: 30
 --- !u!1001 &1452582114735643086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,6 +196,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 90b18e680085f1347a286190c75fcfb4, type: 2}
+    - target: {fileID: 3389304254797006233, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
+      propertyPath: m_TagString
+      value: BubbleWand
+      objectReference: {fileID: 0}
     - target: {fileID: 7046644522681670263, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -216,10 +207,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3389304254797006233, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 34631233633400523}
   m_SourcePrefab: {fileID: 100100000, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
 --- !u!4 &1414731448582815269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
   m_PrefabInstance: {fileID: 1452582114735643086}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4260864841557875799 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3389304254797006233, guid: deea3f3c7f3796b449cb4c9c9c264e73, type: 3}
+  m_PrefabInstance: {fileID: 1452582114735643086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &34631233633400523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260864841557875799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df47551b1e6f436bab3bd150f8cde8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fuelAmount: 30
