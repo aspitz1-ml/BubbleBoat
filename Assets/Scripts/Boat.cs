@@ -16,6 +16,7 @@ public class Boat : MonoBehaviour
     public float maxTiltAngle = 10f; // Maximum angle to tilt left/right
     public float maxVerticalTiltAngle = 15f; // Maximum angle to tilt upward/downward
     public DamageFlash damageFlash; // Reference to the DamageFlash script
+    public GameOver gameOver; // Reference to the GameOver script
 
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
@@ -33,6 +34,13 @@ public class Boat : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         characterController.Move(Vector3.forward * forwardSpeed * Time.deltaTime);
         damageFlash = GetComponent<DamageFlash>();
+        GameObject gameOverObj = GameObject.Find("GameOverText");
+        if (gameOverObj != null)
+        {
+            Debug.Log("Game Over object found");
+            gameOver = gameOverObj.GetComponent<GameOver>();
+        }
+        
 
         // Add initial fuel to the boat if Fuel singleton exists
         if (Fuel.Instance != null)
@@ -54,6 +62,8 @@ public class Boat : MonoBehaviour
         {
             Debug.Log("Out of fuel! Boat cannot move.");
             forwardSpeed = 0; // Stop forward movement
+            gameOver.OnGameOver();
+
             return; // Skip further processing
         }
         #endregion
@@ -70,6 +80,7 @@ public class Boat : MonoBehaviour
         {
             Debug.Log("Out of fuel! Boat cannot move.");
             forwardSpeed = 0; // Stop forward movement
+            
             return; // Skip further processing
         }
 
