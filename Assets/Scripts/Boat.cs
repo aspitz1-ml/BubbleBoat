@@ -85,7 +85,7 @@ public class Boat : MonoBehaviour
         // Check for the space bar input to "float" the boat
         if (Input.GetKeyDown(KeyCode.Space) && !coolDown && transform.position.y < maxHeight)
         {
-            Debug.Log("Up!!");
+            // Debug.Log("Up!!");
             coolDown = true; // Set the cooldown flag
             velocity.y = jumpForce; // Apply upward force
             // Give boost to forward speed
@@ -124,7 +124,7 @@ public class Boat : MonoBehaviour
         // Move the boat with the arrow keys
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            Debug.Log("Right Arrow");
+            // Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
             targetYRotation = maxRotationAngle; // Turn to the left
@@ -132,7 +132,7 @@ public class Boat : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
-            Debug.Log("Left Arrow");
+            // Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
             characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
             targetYRotation = -maxRotationAngle; // Turn to the right
