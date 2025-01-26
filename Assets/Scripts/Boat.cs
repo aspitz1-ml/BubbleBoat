@@ -22,6 +22,7 @@ public class Boat : MonoBehaviour
     private CharacterController characterController;
     private Vector3 velocity; // Current velocity of boat
     private bool coolDown = false; // Only allow one jump every 0.3 seconds
+    private float rotationOffset = 90f; // Offset to rotate the boat
     
 
     void Start()
@@ -92,7 +93,7 @@ public class Boat : MonoBehaviour
             Fuel.Instance.AddFuel(-5f);
 
             // Look Up!
-            LookAt = LookUpPoint;
+            // LookAt = LookUpPoint;
             StartCoroutine(ForwardSpeedRefresh()); // Start the forward speed timer
             StartCoroutine(CooldownRefresh()); // Start the cooldown timer
         }
@@ -114,27 +115,30 @@ public class Boat : MonoBehaviour
             Debug.Log("Right Arrow");
             horizontalSpeed = 10f;
             // Look Right!
-            LookAt = LookRightPoint;
+            // LookAt = LookRightPoint;
             characterController.Move(Vector3.right * horizontalSpeed * Time.deltaTime);
         } else if (Input.GetKey(KeyCode.LeftArrow)) // Move the boat right with Left Arrow
         {
             Debug.Log("Left Arrow");
             horizontalSpeed = 10f;
             // Look Left!
-            LookAt = LookLeftPoint;
+            // LookAt = LookLeftPoint;
             characterController.Move(Vector3.left * horizontalSpeed * Time.deltaTime);
         } else
         {
             horizontalSpeed = 0f;
+            // LookAt = DefaultLookAt;
         }
         #endregion
 
         #region Smooth Rotation
         if (LookAt != null)
         {
-            Debug.Log("Looking at: " + LookAt);
-            Quaternion LookAtRotation = Quaternion.LookRotation(LookAt.transform.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, LookAtRotation, Time.deltaTime * 2f);
+            Debug.Log("LookAt.transform.position: " + LookAt.transform.position);
+            Debug.Log("transform.position: " + transform.position);
+            Quaternion LookAtRotation = Quaternion.LookRotation(LookAt.transform.position - transform.position + new Vector3(0, 0, rotationOffset));
+            Debug.Log("LookAtRotation: " + LookAtRotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, LookAtRotation, Time.deltaTime * 5.0f);
         }
         #endregion
     }
@@ -147,6 +151,7 @@ public class Boat : MonoBehaviour
     private IEnumerator CooldownRefresh() {
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
+        // LookAt = DefaultLookAt;
     } 
 
     void OnTriggerEnter(Collider other)
