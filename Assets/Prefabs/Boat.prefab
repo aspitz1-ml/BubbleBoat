@@ -62,6 +62,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3193471407922298593}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8788541580037122103}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1700009253230460246}
   m_SourcePrefab: {fileID: 100100000, guid: e6ac7412b6ecb4d57890a4fccc675b89, type: 3}
 --- !u!1 &1003514078548174308 stripped
 GameObject:
@@ -117,3 +123,45 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &8788541580037122103
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003514078548174308}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7128539, y: 2.469563, z: 2.5962877}
+  m_Center: {x: -0.8130144, y: -0.16859746, z: -0.7206166}
+--- !u!65 &1700009253230460246
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003514078548174308}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8657491, y: 0.5851991, z: 2.22857}
+  m_Center: {x: -0.7408601, y: 0.4889604, z: 0.6142843}
