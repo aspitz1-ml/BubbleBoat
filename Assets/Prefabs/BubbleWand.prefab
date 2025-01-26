@@ -245,3 +245,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df47551b1e6f436bab3bd150f8cde8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fuelAmount: 20
