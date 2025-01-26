@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BubbleWand
   - Boat
+  - Hazard
   layers:
   - Default
   - TransparentFX
