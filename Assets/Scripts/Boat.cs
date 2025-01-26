@@ -222,10 +222,6 @@ public class Boat : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         ouch.SetVisible(false);
         yield return new WaitForSeconds(.5f);
-        ouch.SetVisible(true);
-        yield return new WaitForSeconds(.5f);
-        ouch.SetVisible(false);
-        yield return new WaitForSeconds(.5f);
     }
 
     private IEnumerator CorrectBounceBack()
