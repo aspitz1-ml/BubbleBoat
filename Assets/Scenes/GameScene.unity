@@ -847,6 +847,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BubbleWand (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7249995602100329759, guid: 891d8090fcf464940a1450a7418a5f59, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7426447365915316515, guid: 891d8090fcf464940a1450a7418a5f59, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.5
