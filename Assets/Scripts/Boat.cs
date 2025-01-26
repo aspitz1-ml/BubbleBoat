@@ -37,21 +37,10 @@ public class Boat : MonoBehaviour
         GameObject gameOverObj = GameObject.Find("GameOverText");
         if (gameOverObj != null)
         {
-            Debug.Log("Hit OBJECT");
             gameOver = gameOverObj.GetComponent<GameOver>();
         }
-        
 
-        // Add initial fuel to the boat if Fuel singleton exists
-        if (Fuel.Instance != null)
-        {
-            Fuel.Instance.AddFuel(Fuel.Instance.maxFuel);
-            Debug.Log("Fuel added to boat");
-        }
-        else
-        {
-            Debug.Log("Fuel instance not found");
-        }
+        InitFuel();
     }
 
     void Update()
@@ -60,7 +49,6 @@ public class Boat : MonoBehaviour
         // Stop movement if out of fuel
         if (Fuel.Instance != null && Fuel.Instance.currentFuel <= 0)
         {
-            Debug.Log("Out of fuel! Boat cannot move.");
             forwardSpeed = 0; // Stop forward movement
             gameOver.OnGameOver();
 
@@ -76,13 +64,6 @@ public class Boat : MonoBehaviour
             Fuel.Instance.currentFuel = Mathf.Max(Fuel.Instance.currentFuel, 0); // Clamp to 0
         }
 
-        if (Fuel.Instance != null && Fuel.Instance.currentFuel <= 0)
-        {
-            Debug.Log("Out of fuel! Boat cannot move.");
-            forwardSpeed = 0; // Stop forward movement
-            
-            return; // Skip further processing
-        }
 
         #endregion
 
@@ -178,6 +159,20 @@ public class Boat : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         coolDown = false;
+    }
+
+    void InitFuel()
+    {
+        // Add initial fuel to the boat if Fuel singleton exists
+        if (Fuel.Instance != null)
+        {
+            Fuel.Instance.AddFuel(Fuel.Instance.maxFuel);
+            Debug.Log("Fuel added to boat");
+        }
+        else
+        {
+            Debug.Log("Fuel instance not found");
+        }
     }
 
     void OnTriggerEnter(Collider other)
