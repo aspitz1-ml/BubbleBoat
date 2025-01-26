@@ -211,8 +211,8 @@ public class Boat : MonoBehaviour
         if (other.gameObject.CompareTag("FinishLine"))
         {
             youWin.OnYouWin();
-            isGameOver = true;
             StopBoat();
+            isGameOver = true;
         }
     }
 
