@@ -137,7 +137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -50.653656, y: 0.0017547607}
+  m_AnchoredPosition: {x: -50.653656, y: -0.4}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &720609281987318171
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuelMeterFill: {fileID: 3538522793973714691}
-  maxFuel: 100
+  maxFuel: 200
   currentFuel: 0
 --- !u!1 &6724704021599305401
 GameObject:
